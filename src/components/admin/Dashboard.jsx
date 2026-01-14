@@ -12,7 +12,6 @@ const Dashboard = () => {
     consultants: [],
     clients: [],
     projects: [],
-    contents: []
   });
 
   useEffect(() => {
@@ -33,37 +32,29 @@ const Dashboard = () => {
           consultants: stats?.consultants?.length,
           clients: stats?.clients?.length,
           projects: stats?.projects?.length,
-          contents: stats?.contents?.length
         }}
       />
 
       {/* Charts */}
       <div className="row g-4">
-        <div className="col-md-6 col-lg-3">
+        <div className="col-md-6 col-lg-4">
           <StatusChart
             title="Consultants Status"
             data={countByStatus(stats?.consultants)}
           />
         </div>
 
-        <div className="col-md-6 col-lg-3">
+        <div className="col-md-6 col-lg-4">
           <StatusChart
             title="Clients Status"
             data={countByStatus(stats?.clients)}
           />
         </div>
 
-        <div className="col-md-6 col-lg-3">
+        <div className="col-md-6 col-lg-4">
           <StatusChart
             title="Projects Status"
             data={countByStatus(stats?.projects)}
-          />
-        </div>
-
-        <div className="col-md-6 col-lg-3">
-          <StatusChart
-            title="Content Status"
-            data={countByStatus(stats?.contents)}
           />
         </div>
       </div>

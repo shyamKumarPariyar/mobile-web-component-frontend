@@ -1,17 +1,15 @@
-import axios from "axios";
+import { http } from "../constraints/http.common";
 
 export const fetchDashboardStats = async () => {
-    const [consultants, clients, projects, contents] = await Promise.all([
-        axios.get("/api/consultants"),
-        axios.get("/api/clients"),
-        axios.get("/api/projects"),
-        axios.get("/api/contents")
+    const [consultants, clients, projects] = await Promise.all([
+        http.get(`/consultant/api/consultants`),
+        http.get(`/client/api/clients`),
+        http.get(`/project/api/projects`)
     ]);
 
     return {
         consultants: consultants.data.data,
         clients: clients.data.data,
         projects: projects.data.data,
-        contents: contents.data.data
     };
 };

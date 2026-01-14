@@ -15,6 +15,26 @@ html,body {
 	/* background-size: cover;
 	background-repeat: no-repeat; */
 	height: 100%;
-	font-family: 'Numans', sans-serif;
+	/* font-family: 'Numans', sans-serif; */
+	font-family: 'Inter', sans-serif;
+
 }
+
+.line-clamp-4 {
+	display: -webkit-box;
+	-webkit-line-clamp: 4;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
+
+.multi-line-cell {
+	display: -webkit-box;
+	-webkit-line-clamp: 4; /* max 4 lines */
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	word-break: break-word;
+}
+
+
 

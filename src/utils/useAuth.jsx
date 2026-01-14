@@ -9,11 +9,11 @@ const AuthContext = createContext();
 const AuthProvider = ({ children, userData }) => {
     const [user, setUser] = useLocalStorage("session", userData);
     const navigate = useNavigate();
-   
+
     const login = async (data) => {
         setUser(data);
         const {role} = jwtDecode(data)
-     
+
         switch (role) {
             case 'superadmin':
                 navigate('/admin/dashboard', {state:{pageHeader: 'Dashboard'}} );
@@ -37,6 +37,10 @@ const AuthProvider = ({ children, userData }) => {
 
             case 'client':
                 navigate(`/client/dashboard`, {state:{pageHeader: 'Client'}});
+                break;
+
+            case 'external':
+                navigate(`/external/dashboard`, {state:{pageHeader: 'External'}});
                 break;
 
             default:

@@ -1,6 +1,6 @@
 export const APP_NAME = 'DIGITAL KNOWLEDGE NETWORK';
 export const SERVER_PORT = 8089;
-export const ENVIRONMENT = "development";
+export const ENVIRONMENT = "production";
 export const CLIENT_URL = window.location.origin;
 export const DEV_SERVER_URL = "http://localhost:8089";
 export const SERVER_URL = window.location.origin + ":" + SERVER_PORT;

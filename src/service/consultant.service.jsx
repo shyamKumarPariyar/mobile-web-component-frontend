@@ -1,6 +1,6 @@
 import { http } from "../constraints/http.common";
 
-export const clientCreate = (data) => {
+export const consultantCreate = (data) => {
     return http.post(`/consultant/api/consultant-create`, data)
 }
 

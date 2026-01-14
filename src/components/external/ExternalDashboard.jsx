@@ -6,7 +6,7 @@ const ExternalDashboard = () => {
     const { setTitle, setHeader } = useHeader()
         useEffect(() => {
             setTitle("DKN SYSTEM | Client");
-            setHeader("External Dashboard");
+            setHeader("External User Dashboard");
         }, [setTitle, setHeader]); 
     return (
         <div>

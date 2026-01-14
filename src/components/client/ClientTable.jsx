@@ -93,7 +93,6 @@ const ClientTable = () => {
             const {data} = res.data
             // console.log(data)
             setClients(data)
-            setClients({email: data.user.email})
         })
         .catch((err) => console.error("Error on getting data", err))
     }

@@ -94,7 +94,6 @@ const Login = () => {
 							<h4>Sign In</h4>
 						</div>
 						<div className="card-body">
-							
 							<form onSubmit={handleSubmit}>
 								<div className="input-group form-group">
 									<div className="input-group-prepend">
@@ -123,14 +122,6 @@ const Login = () => {
 								</div>
 							</form>
 						</div>
-						{/* <div className="card-footer">
-							<div className="d-flex justify-content-center links">
-								Don't have an account?<a href="#">Sign Up</a>
-							</div>
-							<div className="d-flex justify-content-center">
-								<a href="#">Forgot your password?</a>
-							</div>
-						</div> */}
 					</div>
 				</div>
 			</div>

@@ -10,13 +10,15 @@ import AddButton from "../common/AddButton";
 import { useForm } from "react-hook-form";
 import ConfirmDeleteModal from "../common/ConfirmDeleteModal";
 import CommonModal from "../common/CommonModal";
-import { clientCreate, getClients } from "../../service/client.service";
 import { displayToaster } from "../../hooks/DisplayToaster";
+import { consultantCreate, getConsultants } from "../../service/consultant.service";
 
 const defaultValues = {
     id: null,
     email:"",
-    password: ""
+    password: "",
+    expertise: "",
+    experience: ''
 };
 
 
@@ -30,7 +32,7 @@ const ConsultantTable = () => {
     const [isEdit, setIsEdit] = useState(false);
     const [deleteId, setDeleteId] = useState(null);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
-    const [clients, setClients] = useState([]);
+    const [consultants, setConsultants] = useState([]);
 
     const {
         register,
@@ -60,21 +62,21 @@ const ConsultantTable = () => {
      */
     const onSubmit = async (data) => {
         if (isEdit) {
-        setClients(prev =>
+        setConsultants(prev =>
             prev.map(c => (c.id === data.id ? data : c))
         );
 
     } else {
 
-        await clientCreate(data)
+        await consultantCreate(data)
             .then(() => {
                 // console.log("Results:", res.data)
-                GetClients()
-                displayToaster("Client Added Successfully.", 'success')
+                GetConsultants()
+                displayToaster("Consultant Added Successfully.", 'success')
                 setShowModal(false)
                 
             })
-            .catch((err) => console.error("Error on adding client", err))
+            .catch((err) => console.error("Error on adding consultant", err))
         
         }
     };
@@ -83,24 +85,25 @@ const ConsultantTable = () => {
      * Delete
      */
     const confirmDelete = () => {
-        setClients(prev => prev.filter(c => c.id !== deleteId));
+        setConsultants(prev => prev.filter(c => c.id !== deleteId));
         setShowDeleteModal(false);
     };
 
-    const GetClients = async() => {
-        await getClients()
+    const GetConsultants = async() => {
+        await getConsultants()
         .then((res) => {
             const {data} = res.data
-            // console.log(data)
-            setClients(data)
-            setClients({email: data.user.email})
+            console.log(data)
+            setConsultants(data)
         })
         .catch((err) => console.error("Error on getting data", err))
     }
 
-    const filtered = clients?.filter(c =>
-        c.companyName.toLowerCase().includes(search.toLowerCase()) ||
-        c.user?.email.toLowerCase().includes(search.toLowerCase())
+    const filtered = consultants?.filter(c =>
+        c.user?.name?.toLowerCase().includes(search.toLowerCase()) ||
+        c.user?.email?.toLowerCase().includes(search.toLowerCase()) ||
+        c.expertise[0]?.toLowerCase().includes(search.toLowerCase()) ||
+        c.experience?.toLowerCase().includes(search.toLowerCase())
     );
 
     const columns = [
@@ -110,13 +113,23 @@ const ConsultantTable = () => {
             width: "60px"
         },
         { 
-            name: "Company", 
-            selector: row => row.companyName, 
+            name: "Name", 
+            selector: row => row.user?.name, 
             sortable: true 
         },
         { 
             name: "Contact Email",
-            selector: row => row.user.email,
+            selector: row => row?.user?.email,
+            sortable: true
+        },
+        { 
+            name: "Expertise",
+            selector: row => row.expertise,
+            sortable: true
+        },
+        { 
+            name: "Experience",
+            selector: row => row.experience,
             sortable: true
         },
         {
@@ -134,12 +147,12 @@ const ConsultantTable = () => {
     ];
 
     useEffect(() => {
-        setTitle("DKN SYSTEM | Client");
-        setHeader("Manage Client");
+        setTitle("DKN SYSTEM | Consultant");
+        setHeader("Manage Consultant");
     }, [setTitle, setHeader]); 
 
     useEffect(() => {
-        GetClients()
+        GetConsultants()
     },[])
 
     return (
@@ -165,7 +178,7 @@ const ConsultantTable = () => {
                     <SearchBox
                             value={search}
                             onChange={e => setSearch(e.target.value)}
-                            placeholder="Search clients..."
+                            placeholder="Search consultants..."
                         />
                         <AddButton openAdd={openAdd} />
                     </div>
@@ -174,21 +187,70 @@ const ConsultantTable = () => {
 
             <CommonModal
                 show={showModal}
-                title={isEdit ? "Update Client" : "Add Client"}
+                title={isEdit ? "Update Consultant" : "Add Consultant"}
                 onClose={() => setShowModal(false)}
                 onSubmit={handleSubmit(onSubmit)}
             >
                 <div className="row g-3">
                 <div className="col-md-6">
-                    <label className="form-label">Company Name</label>
+                    <label className="form-label"> Name</label>
                     <input
-                    className={`form-control ${errors.companyName ? "is-invalid" : ""}`}
-                    {...register("companyName", {
-                        required: "Company name is required"
+                    className={`form-control ${errors.name ? "is-invalid" : ""}`}
+                    {...register("name", {
+                        required: "Name is required"
                     })}
                     />
                     <div className="invalid-feedback">
-                    {errors.companyName?.message}
+                    {errors.name?.message}
+                    </div>
+                </div>
+                
+
+                {/* Experience Dropdown */}
+                <div className="col-md-6">
+                    <label className="form-label">Experience</label>
+                    <select
+                    className={`form-select ${errors.experience ? "is-invalid" : ""}`}
+                    {...register("experience", { required: "Experience is required" })}
+                    >
+                    <option value="">Select Experience</option>
+                    <option value="NEW">New</option>
+                    <option value="SENIOR">Senior</option>
+                    <option value="GENERAL">General</option>
+                    </select>
+                    <div className="invalid-feedback">
+                    {errors.experience?.message}
+                    </div>
+                </div>
+
+                 {/* Expertise Dropdown */}
+                <div className="col-md-6 mt-3">
+                    <label className="form-label">Expertise</label>
+                    <select
+                    className={`form-select ${errors.expertise ? "is-invalid" : ""}`}
+                    {...register("expertise", { required: "Expertise is required" })}
+                    >
+                    <option value="">Select expertise</option>
+                    <option value="FRONTEND">FRONTEND</option>
+                    <option value="BACKEND">BACKEND</option>
+                    <option value="FULLSTACK">FULLSTACK</option>
+                    <option value="UI/UX">UI/UX</option>
+                    <option value="CONTENT_CREATER">CONTENT_CREATER</option>
+                    <option value="DESIGN">DESIGN</option>
+                    <option value="PROTOTYPE">PROTOTYPE</option>
+                    <option value="REACT">REACT</option>
+                    <option value="REACTJS">REACTJS</option>
+                    <option value="LARAVEL">LARAVEL</option>
+                    <option value="NEXTJS">NEXTJS</option>
+                    <option value="JAVA">JAVA</option>
+                    <option value="PYTHON">PYTHON</option>
+                    <option value="ML">ML</option>
+                    <option value="AI">AI</option>
+                    <option value="THREEJS">THREEJS</option>
+                    <option value="WORDPRESS">WORDPRESS</option>
+                    </select>
+                    <div className="invalid-feedback">
+                    {errors.expertise?.message}
                     </div>
                 </div>
 

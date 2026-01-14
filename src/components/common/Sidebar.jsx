@@ -5,14 +5,55 @@ import { Offcanvas, Nav, Button } from "react-bootstrap";
 import { FaBars, FaHome, FaUser, FaCog } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import { useHeader } from "./HeaderContext";
+import { useEffect } from "react";
 
 const Sidebar = ({role}) => {
     const [show, setShow] = useState(false);
-    const {setHeader, setTitle} = useHeader()
+
+    const [portal, setPortal] = useState('')
+    const [link, setLink] = useState('')
     const linkStyle = ({ isActive }) =>
         isActive
         ? "nav-link text-white bg-secondary rounded mb-1"
         : "nav-link text-white mb-1";
+
+        useEffect(() => {
+    switch (role) {
+        case 'admin':
+            setPortal('Admin')
+            setLink('admin')
+            break;
+
+        case 'seniorconsultant':
+            setPortal('Consultant')
+            setLink('consultant')
+            break;
+
+        case 'newconsultant':
+            setPortal('Consultant')
+            setLink('consultant')
+            break;
+
+        case 'generalconsultant':
+            setPortal('Consultant')
+            setLink('consultant')
+            break;
+
+        case 'external':
+            setPortal('External User')
+            setLink('external')
+            break;
+
+        case 'client':
+            setPortal('Client')
+            setLink('client')
+            break;
+    
+        default:
+            break;
+    }
+        },[])
+
     return (
         <>
         {/* Mobile Toggle Button */}
@@ -28,11 +69,11 @@ const Sidebar = ({role}) => {
         {/* Sidebar for Desktop */}
         <div className="d-none d-md-block text-white vh-100 p-3" style={{ width: "250px", backgroundColor:'#0c174aa8' }}>
             <h1 className="my-4 text-center fw-bold">DKN</h1>
-            <h5 className="text-center text-white fst-italic text-capitalize" >{role} portal</h5>
+            <h5 className="text-center text-white fst-italic text-capitalize" >{portal} portal</h5>
             {/* <img src="/dkn.png" alt="Company Logo" className="img-fluid mb-2"/> */}
                 <Nav defaultActiveKey="/admin/dashboard" className="flex-column nav-width-full">
                 
-                    <NavLink to={`/${role}/dashboard`} className={linkStyle} onClick={() => {setShow(false)}} >
+                    <NavLink to={`/${link}/dashboard`} className={linkStyle} onClick={() => {setShow(false)}} >
                         <FontAwesomeIcon className="px-1 nav-icons"  icon={faHome} style={{width: '20px'}} /> Dashboard
                     </NavLink>
                     {(role === 'admin') &&
@@ -59,7 +100,7 @@ const Sidebar = ({role}) => {
             <Offcanvas.Title className="px-4 f-5 text-center fw-bold">DKN</Offcanvas.Title>
             
             </Offcanvas.Header>
-            <small className="pl-4 ml-3 text-white fst-italic text-capitalize" >{role} portal</small>
+            <small className="pl-4 ml-3 text-white fst-italic text-capitalize" >{portal} portal</small>
             <Offcanvas.Body>
                 <Nav defaultActiveKey="/admin/dashboard" className="flex-column nav-width-full">
                     <NavLink to='/admin/dashboard' className={linkStyle} onClick={() => {setShow(false)}} >

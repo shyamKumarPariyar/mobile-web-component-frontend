@@ -11,7 +11,7 @@ const COLORS = ["#198754", "#ffc107", "#dc3545"];
 const StatusChart = ({ data, title }) => {
   return (
     <div className="card shadow-sm h-100">
-      <div className="card-header fw-semibold">{title}</div>
+      <div className="card-header fw-semibold text-white">{title}</div>
       <div className="card-body">
         <ResponsiveContainer width="100%" height={250}>
           <PieChart>
@@ -19,7 +19,7 @@ const StatusChart = ({ data, title }) => {
               data={data}
               dataKey="value"
               nameKey="name"
-              outerRadius={80}
+              outerRadius={100}
               label
             >
               {data.map((_, index) => (
