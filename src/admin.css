@@ -1,0 +1,39 @@
+/* Root layout */
+.admin-layout {
+    display: flex;
+    min-height: 100vh; /* Full viewport height */
+    width: 100%;
+    overflow: hidden;
+    color: #ffffff;
+    background-image: url("/bg.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 260px;
+     /* Slightly dark gradient with red, purple, and blue */
+    background: linear-gradient(156deg, #2e2e6d, #6a0dad, #252650);
+    color: #ffffff; /* good contrast */
+    padding: 20px;
+    height: 100vh;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.3);
+    color: #ffffff;
+    flex-shrink: 0; /* prevent shrinking */
+}
+
+/* Main content */
+.main-content {
+    flex: 1;
+    /* background-color: #f4f6f9; */
+    overflow-y: auto; /* scroll only content */
+    display: flex;
+    flex-direction: column;
+}
+
+.content {
+    flex: 1;
+    overflow-y: auto;
+}
