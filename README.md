@@ -57,5 +57,6 @@ The system provides a responsive dashboard, authentication, and secure API integ
 
 ### 1️⃣ Clone the Repository
 ```bash
-git clone https://github.com/your-repo/your-project.git
-cd your-project
+git clone https://github.com/shyamKumarPariyar/mobile-web-component-backend.git
+cd mobile-web-component-backend
+npm i
