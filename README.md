@@ -1,7 +1,14 @@
-# MERN Admin Dashboard Application
-
 This is a **MERN stack–based web application** with role-based access for **Admin, Client, Consultant, and External Agent**.  
 The system provides a responsive dashboard, authentication, and secure API integration using **React, Node.js, Express, MongoDB, and Nginx**.
+
+---
+
+## 🌐 Web Application URL
+
+**Live Web Application:**  
+👉 http://13.42.20.190
+
+> ⚠️ Note: The application is currently served over **HTTP**. HTTPS can be enabled once a custom domain is configured.
 
 ---
 
